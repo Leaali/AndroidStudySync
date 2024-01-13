@@ -3,15 +3,12 @@ package ch.lw.myapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,12 +19,13 @@ public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAd
     private ArrayList semester_id, semester_title;
     Activity activity;
 
-    CustomSemesterAdapter(Activity activity, Context context, ArrayList semester_id, ArrayList semester_title){
+    CustomSemesterAdapter(Activity activity, Context context, ArrayList semester_id, ArrayList semester_title) {
         this.activity = activity;
         this.context = context;
         this.semester_id = semester_id;
         this.semester_title = semester_title;
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,16 +39,19 @@ public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAd
         //get String from the Array
         holder.semester_id_text.setText(String.valueOf(semester_id.get(position)));
         holder.semester_title_text.setText(String.valueOf(semester_title.get(position)));
+
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, UpdateSemesterActivity.class);
-                intent.putExtra("id", String.valueOf(semester_id.get(position)));
-                intent.putExtra("title", String.valueOf(semester_title.get(position)));
-                activity.startActivityForResult(intent, 1);
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    Intent intent = new Intent(context, UpdateSemesterActivity.class);
+                    intent.putExtra("id", String.valueOf(semester_id.get(adapterPosition)));
+                    intent.putExtra("title", String.valueOf(semester_title.get(adapterPosition)));
+                    activity.startActivityForResult(intent, 1);
+                }
             }
         });
-
     }
 
     @Override
@@ -58,15 +59,15 @@ public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAd
         return semester_id.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView semester_id_text, semester_title_text;
-        ConstraintLayout mainLayout; //TODO: ggf. muss Linear sein
+        ConstraintLayout mainLayout;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             semester_id_text = itemView.findViewById(R.id.semester_id_text);
             semester_title_text = itemView.findViewById(R.id.semester_title_text);
             mainLayout = itemView.findViewById(R.id.mainLayout);
-
         }
     }
 }

@@ -1,15 +1,16 @@
 package ch.lw.myapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class AddSemesterActivity extends AppCompatActivity {
     EditText input_title;
     Button button_add;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +23,9 @@ public class AddSemesterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DbHelper myDB = new DbHelper(AddSemesterActivity.this);
                 myDB.addSemester(input_title.getText().toString().trim());
+                setResult(1);
+                finish();
             }
         });
-
     }
 }

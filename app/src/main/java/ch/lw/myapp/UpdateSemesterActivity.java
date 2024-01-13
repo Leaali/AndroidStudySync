@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class UpdateSemesterActivity extends AppCompatActivity {
     EditText input_title_edit;
-    Button  button_update_edit, button_delete_edit;
+    Button button_update_edit, button_delete_edit;
     String id, title;
 
     @Override
@@ -28,6 +28,7 @@ public class UpdateSemesterActivity extends AppCompatActivity {
         button_update_edit.setOnClickListener(view -> updateData());
         button_delete_edit.setOnClickListener(view -> confirmDialog());
     }
+
     void getAndSetIntentData() {
         if (getIntent().hasExtra("id") && getIntent().hasExtra("title")) {
             id = getIntent().getStringExtra("id");
@@ -59,5 +60,4 @@ public class UpdateSemesterActivity extends AppCompatActivity {
                 .setNegativeButton("Nein", null)
                 .show();
     }
-
 }
