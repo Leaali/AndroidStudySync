@@ -62,4 +62,18 @@ public class DbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    void updateData(String row_id, String title){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_TITLE, title);
+
+        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id}); // update command für SLQLite
+        if(result == -1){
+            Toast.makeText(context, "Fehler, das Semester konnte nicht angepasst werden.", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "Erfolgreich angepasst!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 }

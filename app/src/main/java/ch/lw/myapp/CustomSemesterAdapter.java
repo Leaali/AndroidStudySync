@@ -1,6 +1,8 @@
 package ch.lw.myapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,8 +20,10 @@ import java.util.ArrayList;
 public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAdapter.MyViewHolder> {
     private Context context;
     private ArrayList semester_id, semester_title;
+    Activity activity;
 
-    CustomSemesterAdapter(Context context, ArrayList semester_id, ArrayList semester_title){
+    CustomSemesterAdapter(Activity activity, Context context, ArrayList semester_id, ArrayList semester_title){
+        this.activity = activity;
         this.context = context;
         this.semester_id = semester_id;
         this.semester_title = semester_title;
@@ -36,6 +41,15 @@ public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAd
         //get String from the Array
         holder.semester_id_text.setText(String.valueOf(semester_id.get(position)));
         holder.semester_title_text.setText(String.valueOf(semester_title.get(position)));
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, UpdateSemesterActivity.class);
+                intent.putExtra("id", String.valueOf(semester_id.get(position)));
+                intent.putExtra("title", String.valueOf(semester_title.get(position)));
+                activity.startActivityForResult(intent, 1);
+            }
+        });
 
     }
 
@@ -46,15 +60,13 @@ public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView semester_id_text, semester_title_text;
-        LinearLayout mainLayout; //TODO: ggf geht das nicht
+        ConstraintLayout mainLayout; //TODO: ggf. muss Linear sein
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             semester_id_text = itemView.findViewById(R.id.semester_id_text);
             semester_title_text = itemView.findViewById(R.id.semester_title_text);
-/*            mainLayout = itemView.findViewById(R.id.mainLayout);
-            //Animate Recyclerview
-            Animation translate_anim = AnimationUtils.loadAnimation(context, R.anim.translate_anim);
-            mainLayout.setAnimation(translate_anim);*/
+            mainLayout = itemView.findViewById(R.id.mainLayout);
+
         }
     }
 }

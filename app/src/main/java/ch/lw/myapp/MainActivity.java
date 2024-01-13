@@ -1,5 +1,6 @@
 package ch.lw.myapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,10 +43,18 @@ public class MainActivity extends AppCompatActivity {
         semester_title = new ArrayList<>();
 
         storeDataInArrays();
-        customSemesterAdapter = new CustomSemesterAdapter(MainActivity.this, semester_id, semester_title);
+        customSemesterAdapter = new CustomSemesterAdapter(MainActivity.this, this, semester_id, semester_title);
         view_recycler.setAdapter(customSemesterAdapter);
         view_recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
+    }
+    //refresh page (if. sth. changeg)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            recreate();
+        }
     }
     void storeDataInArrays() {
         Cursor cursor = HelperDB.readAllData();
