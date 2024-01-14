@@ -26,7 +26,6 @@ public class UpdateSemesterActivity extends AppCompatActivity {
     //Subject
     RecyclerView view_recycler_subject;
     FloatingActionButton button_add_subject;
-
     DbHelper HelperDB;
     ArrayList<String> subject_id, semester_id, subject_title, subject_grades, subject_average;
     CustomSubjectAdapter customSubjectAdapter;

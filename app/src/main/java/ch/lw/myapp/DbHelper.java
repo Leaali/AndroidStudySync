@@ -129,13 +129,11 @@ public class DbHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
-    void updateSubject(int subjectId, String title, String grades, double average) {
+    void updateSubject(int subjectId, String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_SUBJECT_TITLE, title);
-        cv.put(COLUMN_SUBJECT_GRADES, grades);
-        cv.put(COLUMN_SUBJECT_AVERAGE, average);
 
         long result = db.update(TABLE_SUBJECTS, cv, COLUMN_SUBJECT_ID + "=?", new String[]{String.valueOf(subjectId)});
         if (result == -1) {
