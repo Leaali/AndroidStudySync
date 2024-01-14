@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAdapter.MyViewHolder> {
-    private Context context;
-    private ArrayList semester_id, semester_title;
+    private final Context context;
+    private final ArrayList<String> semester_id, semester_title;
     Activity activity;
 
-    CustomSemesterAdapter(Activity activity, Context context, ArrayList semester_id, ArrayList semester_title) {
+    CustomSemesterAdapter(Activity activity, Context context, ArrayList<String> semester_id, ArrayList<String> semester_title) {
         this.activity = activity;
         this.context = context;
         this.semester_id = semester_id;
@@ -59,7 +59,7 @@ public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAd
         return semester_id.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView semester_id_text, semester_title_text;
         ConstraintLayout mainLayout;
 

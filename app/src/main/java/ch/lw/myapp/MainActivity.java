@@ -31,12 +31,9 @@ public class MainActivity extends AppCompatActivity {
         view_recycler = findViewById(R.id.view_recycler);
         button_add = findViewById(R.id.button_add);
 
-        button_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddSemesterActivity.class);
-                startActivityForResult(intent, 1); //TODO: falls Zeit, versuchen mittels anderen Methode die Einträge nach erstellung zu aktualisieren (recreate)
-            }
+        button_add.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, AddSemesterActivity.class);
+            startActivityForResult(intent, 1); //TODO: falls Zeit, versuchen mittels anderen Methode die Einträge nach erstellung zu aktualisieren (recreate)
         });
         HelperDB = new DbHelper(MainActivity.this);
         semester_id = new ArrayList<>();

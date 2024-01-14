@@ -10,16 +10,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 public class DbHelper extends SQLiteOpenHelper {
-    private Context context;
+    private final Context context;
     private static final String DATABASE_NAME = "Grade.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "my_semester";
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_TITLE = "semester_name";
-//    private static final String COLUMN_SUBJECT = "subject";
-//    private static final String COLUMN_GRAGE = "grade";
-//    private static final String COLUMN_AVERAGE = "grade_average";
 
     public DbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
