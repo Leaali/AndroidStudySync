@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateSemesterActivity">
+    tools:context=".UpdateSubjectActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,58 +16,36 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout_edit"
+            android:id="@+id/linearLayout_subject_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/input_title_edit"
+                android:id="@+id/input_title_subject_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="Semestername"
+                android:hint="Fachnamen"
                 android:inputType="text" />
 
             <Button
-                android:id="@+id/button_update_edit"
+                android:id="@+id/button_update_subject_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Anpassen" />
 
             <Button
-                android:id="@+id/button_delete_edit"
+                android:id="@+id/button_delete_subject_edit"
                 android:layout_width="51dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/design_default_color_error"
                 app:icon="@drawable/icon_delete"
                 app:iconGravity="textStart"
-                app:iconPadding="0dp"/>
-
+                app:iconPadding="0dp" />
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/view_recycler_subject"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="20dp"
-            tools:layout_editor_absoluteX="-101dp"
-            tools:layout_editor_absoluteY="-248dp" />
-
-
     </LinearLayout>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_add_subject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="36dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/icon_add" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

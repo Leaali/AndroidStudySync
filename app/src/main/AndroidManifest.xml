@@ -13,13 +13,22 @@
         android:theme="@style/Theme.StudySync"
         tools:targetApi="31">
         <activity
+            android:name=".AddSubjectActivity"
+            android:exported="false"
+            android:label="Noten übersicht"
+            android:parentActivityName=".UpdateSemesterActivity" />
+        <activity
+            android:name=".UpdateSubjectActivity"
+            android:exported="false"
+            android:parentActivityName=".UpdateSemesterActivity" />
+        <activity
             android:name=".UpdateSemesterActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddSemesterActivity"
             android:exported="false"
-            android:label="Noten übersicht"
+            android:label="Fächer übersicht"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
