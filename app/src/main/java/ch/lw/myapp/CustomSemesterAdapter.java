@@ -40,16 +40,13 @@ public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAd
         holder.semester_id_text.setText(String.valueOf(semester_id.get(position)));
         holder.semester_title_text.setText(String.valueOf(semester_title.get(position)));
 
-        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int adapterPosition = holder.getAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    Intent intent = new Intent(context, UpdateSemesterActivity.class);
-                    intent.putExtra("id", String.valueOf(semester_id.get(adapterPosition)));
-                    intent.putExtra("title", String.valueOf(semester_title.get(adapterPosition)));
-                    activity.startActivityForResult(intent, 1);
-                }
+        holder.mainLayout.setOnClickListener(view -> {
+            int adapterPosition = holder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                Intent intent = new Intent(context, UpdateSemesterActivity.class);
+                intent.putExtra("id", String.valueOf(semester_id.get(adapterPosition)));
+                intent.putExtra("title", String.valueOf(semester_title.get(adapterPosition)));
+                activity.startActivityForResult(intent, 1);
             }
         });
     }
