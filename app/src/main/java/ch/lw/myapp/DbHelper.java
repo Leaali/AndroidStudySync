@@ -216,4 +216,17 @@ public class DbHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Erfolgreich aktualisiert.", Toast.LENGTH_SHORT).show();
         }
     }
+    public void updateSubjectAverage(int subjectId, double average) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_SUBJECT_AVERAGE, average);
+
+        long result = db.update(TABLE_SUBJECTS, cv, COLUMN_SUBJECT_ID + "=?", new String[]{String.valueOf(subjectId)});
+        if (result == -1) {
+            Toast.makeText(context, "Fehler, der Durchschnitt konnte nicht aktualisiert werden.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Erfolgreich aktualisiert!", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

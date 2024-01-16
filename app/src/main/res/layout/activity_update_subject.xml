@@ -57,6 +57,12 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+        <TextView
+            android:id="@+id/text_grade_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="average" />
+
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

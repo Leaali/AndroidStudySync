@@ -84,6 +84,12 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
     private void saveChanges(int position, String newTitle, Double newWeight, Double newGrade) {
         int gradeId = Integer.parseInt(grade_id.get(position));
         dbHelper.updateGrade(gradeId, newTitle, newWeight, newGrade);
+        // Aktualisierung von den werten, um den Average zu berechnen
+        grade_title.set(position, newTitle);
+        grade_weight.set(position, newWeight);
+        grade_value.set(position, newGrade);
+        notifyItemChanged(position);
+        ((UpdateSubjectActivity) context).calculateAndDisplayAverage();
     }
 
     private void deleteGrade(int position) {
@@ -97,7 +103,9 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
         grade_weight.remove(position);
         grade_value.remove(position);
 
-        notifyItemRemoved(position); // informieren, dass sich Daten geändert haben
+        notifyItemRemoved(position); // Aktualisierung von den werten, um den Average zu berechnen
+        notifyItemRangeChanged(position, getItemCount());
+        ((UpdateSubjectActivity) context).calculateAndDisplayAverage();
         Toast.makeText(context, "Note erfolgreich gelöscht!", Toast.LENGTH_SHORT).show();
     }
 }

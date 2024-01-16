@@ -42,6 +42,7 @@ public class UpdateSubjectActivity extends AppCompatActivity {
         button_delete_subject_edit = findViewById(R.id.button_delete_subject_edit);
         button_add_grade = findViewById(R.id.button_add_grade);
         view_recycler_grade = findViewById(R.id.view_recycler_grade);
+        text_grade_average = findViewById(R.id.text_grade_average);
 
         getAndSetIntentData();
         setupGradeWithDb();
@@ -137,7 +138,25 @@ public class UpdateSubjectActivity extends AppCompatActivity {
                 grade_value.add(cursor.getDouble(columnIndexValue));
             }
             customGradeAdapter.notifyDataSetChanged(); // Aktualisiere den RecyclerView-Adapter
+            calculateAndDisplayAverage();
         }
         cursor.close(); // Ressourcen freizugeben
+    }
+
+    void calculateAndDisplayAverage() {
+        double totalWeightedValue = 0.0;
+        double totalWeight = 0.0;
+
+        for (int i = 0; i < grade_id.size(); i++) {
+            double weight = grade_weight.get(i);
+            double value = grade_value.get(i);
+            totalWeightedValue += weight * value;
+            totalWeight += weight;
+        }
+
+        double currentAverage  = totalWeight > 0 ? totalWeightedValue / totalWeight : 0.0;
+        helperDB.updateSubjectAverage(Integer.parseInt(subject_id.get(0)), currentAverage);
+        text_grade_average.setText(String.valueOf(currentAverage));
+
     }
 }
