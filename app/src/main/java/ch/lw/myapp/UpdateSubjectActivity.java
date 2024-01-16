@@ -1,18 +1,36 @@
 package ch.lw.myapp;
 
+import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class UpdateSubjectActivity extends AppCompatActivity {
     EditText input_title_subject_edit;
     Button button_update_subject_edit, button_delete_subject_edit;
+    FloatingActionButton button_add_grade;
     String id, title;
+
+    // ---Grade---
+    CustomGradeAdapter customGradeAdapter;
+    ArrayList<String> grade_id, subject_id, grade_title;
+    ArrayList<Double> grade_weight, grade_value;
+    RecyclerView view_recycler_grade;
+    TextView text_grade_average;
+    DbHelper helperDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +40,15 @@ public class UpdateSubjectActivity extends AppCompatActivity {
         input_title_subject_edit = findViewById(R.id.input_title_subject_edit);
         button_update_subject_edit = findViewById(R.id.button_update_subject_edit);
         button_delete_subject_edit = findViewById(R.id.button_delete_subject_edit);
+        button_add_grade = findViewById(R.id.button_add_grade);
+        view_recycler_grade = findViewById(R.id.view_recycler_grade);
 
         getAndSetIntentData();
+        setupGradeWithDb();
+        loadGrades(Integer.parseInt(id));
         button_update_subject_edit.setOnClickListener(view -> updateData());
         button_delete_subject_edit.setOnClickListener(view -> confirmDialog());
+        button_add_grade.setOnClickListener(view -> addGrade());
     }
 
     void getAndSetIntentData() {
@@ -58,5 +81,63 @@ public class UpdateSubjectActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Nein", null)
                 .show();
+    }
+
+    // ----------------------------------------Grade-------------------------------------------
+    void setupGradeWithDb() {
+        helperDB = new DbHelper(UpdateSubjectActivity.this);
+        grade_id = new ArrayList<>();
+        subject_id = new ArrayList<>();
+        grade_title = new ArrayList<>();
+        grade_weight = new ArrayList<>();
+        grade_value = new ArrayList<>();
+
+        customGradeAdapter = new CustomGradeAdapter(UpdateSubjectActivity.this, helperDB, grade_id, subject_id, grade_title, grade_weight, grade_value);
+        view_recycler_grade.setAdapter(customGradeAdapter);
+        view_recycler_grade.setLayoutManager(new LinearLayoutManager(UpdateSubjectActivity.this));
+    }
+
+    void addGrade() {
+        String gradeTitle = "";
+        double gradeWeight = 1.0;
+        double gradeValue = 0.0;
+
+        long result = helperDB.addGrade(Long.parseLong(id), gradeTitle, gradeWeight, gradeValue);
+
+        if (result != -1) {
+            Toast.makeText(this, "Note erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
+            loadGrades(Integer.parseInt(id)); // Reload Recycle view
+        } else {
+            Toast.makeText(this, "Fehler beim Hinzufügen der Note.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    void loadGrades(int subjectId) {
+        Cursor cursor = helperDB.readAllGrades(subjectId);
+
+        grade_id.clear();
+        subject_id.clear();
+        grade_title.clear();
+        grade_weight.clear();
+        grade_value.clear();
+
+        int columnIndexId = cursor.getColumnIndex(DbHelper.COLUMN_GRADE_ID);
+        int columnIndexSubjectId = cursor.getColumnIndex(DbHelper.COLUMN_SUBJECT_ID_GRADE);
+        int columnIndexTitle = cursor.getColumnIndex(DbHelper.COLUMN_GRADE_TITLE);
+        int columnIndexWeight = cursor.getColumnIndex(DbHelper.COLUMN_GRADE_WEIGHTING);
+        int columnIndexValue = cursor.getColumnIndex(DbHelper.COLUMN_GRADE_VALUE);
+
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                grade_id.add(cursor.getString(columnIndexId));
+                subject_id.add(cursor.getString(columnIndexSubjectId));
+                grade_title.add(cursor.getString(columnIndexTitle));
+                grade_weight.add(cursor.getDouble(columnIndexWeight));
+                grade_value.add(cursor.getDouble(columnIndexValue));
+            }
+            customGradeAdapter.notifyDataSetChanged(); // Aktualisiere den RecyclerView-Adapter
+        }
+        cursor.close(); // Ressourcen freizugeben
     }
 }

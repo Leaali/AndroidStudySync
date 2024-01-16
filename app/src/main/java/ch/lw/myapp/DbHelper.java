@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 public class DbHelper extends SQLiteOpenHelper {
     private final Context context;
     private static final String DATABASE_NAME = "Grade.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     //Semester Table
     private static final String TABLE_NAME = "my_semester";
@@ -27,6 +27,13 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SUBJECT_GRADES = "subject_grades";
     private static final String COLUMN_SUBJECT_AVERAGE = "subject_average";
 
+    //Grade Table
+    private static final String TABLE_GRADES = "my_grades";
+    public static final String COLUMN_GRADE_ID = "grade_id";
+    public static final String COLUMN_SUBJECT_ID_GRADE = "subject_id";
+    public static final String COLUMN_GRADE_TITLE = "grade_title";
+    public static final String COLUMN_GRADE_WEIGHTING = "grade_weighting";
+    public static final String COLUMN_GRADE_VALUE = "grade_value";
 
     public DbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -46,12 +53,21 @@ public class DbHelper extends SQLiteOpenHelper {
                 COLUMN_SUBJECT_GRADES + " TEXT, " +
                 COLUMN_SUBJECT_AVERAGE + " REAL);";
         db.execSQL(subjectTableQuery);
+        String gradeTableQuery = "CREATE TABLE " + TABLE_GRADES +
+                " (" + COLUMN_GRADE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_SUBJECT_ID_GRADE + " INTEGER, " +
+                COLUMN_GRADE_TITLE + " TEXT, " +
+                COLUMN_GRADE_WEIGHTING + " REAL, " +
+                COLUMN_GRADE_VALUE + " REAL);";
+        db.execSQL(gradeTableQuery);
     }
 
     //----------------------------------------Semester-------------------------------------------
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBJECTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GRADES);
         onCreate(db);
     }
 
@@ -150,6 +166,54 @@ public class DbHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Fehler, das Fach konnte nicht gelöscht werden.", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Erfolgreich gelöscht.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //----------------------------------------Grade-------------------------------------------
+
+    public long addGrade(long subjectId, String title, double weighting, double value) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_SUBJECT_ID_GRADE, subjectId);
+        cv.put(COLUMN_GRADE_TITLE, title);
+        cv.put(COLUMN_GRADE_WEIGHTING, weighting);
+        cv.put(COLUMN_GRADE_VALUE, value);
+
+        return db.insert(TABLE_GRADES, null, cv);
+    }
+
+    public Cursor readAllGrades(int subjectId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_GRADES +
+                " WHERE " + COLUMN_SUBJECT_ID_GRADE + " = " + subjectId;
+        return db.rawQuery(query, null);
+    }
+
+    public void deleteGrade(int gradeId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_GRADES, COLUMN_GRADE_ID + "=?", new String[]{String.valueOf(gradeId)});
+        if (result == -1) {
+            Toast.makeText(context, "Fehler, die Note konnte nicht gelöscht werden.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Erfolgreich gelöscht.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void updateGrade(int gradeId, String newTitle, double newWeighting, double newValue) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_GRADE_TITLE, newTitle);
+        cv.put(COLUMN_GRADE_WEIGHTING, newWeighting);
+        cv.put(COLUMN_GRADE_VALUE, newValue);
+
+        long result = db.update(TABLE_GRADES, cv, COLUMN_GRADE_ID + "=?", new String[]{String.valueOf(gradeId)});
+
+        if (result == -1) {
+            Toast.makeText(context, "Fehler, die Note konnte nicht aktualisiert werden.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Erfolgreich aktualisiert.", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -47,5 +47,27 @@
                 app:iconGravity="textStart"
                 app:iconPadding="0dp" />
         </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/view_recycler_grade"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            tools:layout_editor_absoluteX="-101dp"
+            tools:layout_editor_absoluteY="-248dp" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_add_grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="36dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/icon_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>
