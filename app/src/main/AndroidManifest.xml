@@ -15,20 +15,22 @@
         <activity
             android:name=".AddSubjectActivity"
             android:exported="false"
-            android:label="Noten übersicht"
+            android:label="Neues Fach hinzufügen"
             android:parentActivityName=".UpdateSemesterActivity" />
         <activity
             android:name=".UpdateSubjectActivity"
             android:exported="false"
-            android:parentActivityName=".UpdateSemesterActivity" />
+            android:label="Noten"
+            android:parentActivityName=".UpdateSubjectActivity" />
         <activity
             android:name=".UpdateSemesterActivity"
             android:exported="false"
+            android:label="Fächer übersicht"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddSemesterActivity"
             android:exported="false"
-            android:label="Fächer übersicht"
+            android:label="Neues Semester hinzufügen"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
