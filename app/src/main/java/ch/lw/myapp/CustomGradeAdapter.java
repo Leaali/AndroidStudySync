@@ -42,7 +42,9 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
         holder.input_title_grade_edit.setText(grade_title.get(position));
         holder.input_weight_grade_edit.setText(String.valueOf(grade_weight.get(position)));
         holder.input_grade_grade_edit.setText(String.valueOf(grade_value.get(position)));
+        holder.button_save_grade.setOnClickListener(view -> saveChanges(position, holder.input_title_grade_edit.getText().toString(), Double.parseDouble(holder.input_weight_grade_edit.getText().toString()), Double.parseDouble(holder.input_grade_grade_edit.getText().toString())));
 
+/*      // Speichern beim verlassen des Input Feldes => führte öfters zu chrashes
         holder.input_title_grade_edit.setOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
                 saveChanges(position, holder.input_title_grade_edit.getText().toString(), Double.parseDouble(holder.input_weight_grade_edit.getText().toString()), Double.parseDouble(holder.input_grade_grade_edit.getText().toString()));
@@ -57,7 +59,7 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
             if (!hasFocus) {
                 saveChanges(position, holder.input_title_grade_edit.getText().toString(), Double.parseDouble(holder.input_weight_grade_edit.getText().toString()), Double.parseDouble(holder.input_grade_grade_edit.getText().toString()));
             }
-        });
+        });*/
 
         holder.button_delete_grade.setOnClickListener(view -> deleteGrade(position));
     }
@@ -69,7 +71,7 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         EditText input_title_grade_edit, input_weight_grade_edit, input_grade_grade_edit;
-        Button button_delete_grade;
+        Button button_delete_grade, button_save_grade;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -78,6 +80,7 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
             input_weight_grade_edit = itemView.findViewById(R.id.input_weight_grade_edit);
             input_grade_grade_edit = itemView.findViewById(R.id.input_grade_grade_edit);
             button_delete_grade = itemView.findViewById(R.id.button_delete_grade);
+            button_save_grade= itemView.findViewById(R.id.button_save_grade);
         }
     }
 
@@ -88,7 +91,7 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
         grade_title.set(position, newTitle);
         grade_weight.set(position, newWeight);
         grade_value.set(position, newGrade);
-        notifyItemChanged(position);
+        //notifyItemChanged(position);
         ((UpdateSubjectActivity) context).calculateAndDisplayAverage();
     }
 
@@ -103,7 +106,7 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
         grade_weight.remove(position);
         grade_value.remove(position);
 
-        notifyItemRemoved(position); // Aktualisierung von den werten, um den Average zu berechnen
+        //notifyItemRemoved(position); // Aktualisierung von den werten, um den Average zu berechnen
         notifyItemRangeChanged(position, getItemCount());
         ((UpdateSubjectActivity) context).calculateAndDisplayAverage();
         Toast.makeText(context, "Note erfolgreich gelöscht!", Toast.LENGTH_SHORT).show();
