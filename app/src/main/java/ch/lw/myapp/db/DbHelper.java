@@ -15,7 +15,7 @@ import java.util.List;
 public class DbHelper extends SQLiteOpenHelper {
     private final Context context;
     private static final String DATABASE_NAME = "Grade.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     //Semester Table
     private static final String TABLE_NAME = "my_semester";
@@ -37,6 +37,14 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_GRADE_TITLE = "grade_title";
     public static final String COLUMN_GRADE_WEIGHTING = "grade_weighting";
     public static final String COLUMN_GRADE_VALUE = "grade_value";
+
+    // Exam Table
+    private static final String TABLE_EXAMS = "my_exams";
+    public static final String COLUMN_EXAM_ID = "exam_id";
+    public static final String COLUMN_EXAM_DATE = "exam_date";
+    public static final String COLUMN_EXAM_SUBJECT = "exam_subject";
+    public static final String COLUMN_EXAM_DESCRIPTION = "exam_description";
+
 
     public DbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -63,6 +71,12 @@ public class DbHelper extends SQLiteOpenHelper {
                 COLUMN_GRADE_WEIGHTING + " REAL, " +
                 COLUMN_GRADE_VALUE + " REAL);";
         db.execSQL(gradeTableQuery);
+        String examTableQuery = "CREATE TABLE " + TABLE_EXAMS +
+                " (" + COLUMN_EXAM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_EXAM_DATE + " DATE, " +
+                COLUMN_EXAM_SUBJECT + " TEXT, " +
+                COLUMN_EXAM_DESCRIPTION + " TEXT);";
+        db.execSQL(examTableQuery);
     }
 
     //----------------------------------------Semester-------------------------------------------
@@ -124,6 +138,7 @@ public class DbHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Erfolgreich gelöscht.", Toast.LENGTH_SHORT).show();
         }
     }
+
     List<Integer> getAllSubjectsInSemester(int semesterId) {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Integer> subjectIds = new ArrayList<>();
@@ -204,6 +219,19 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void updateSubjectAverage(int subjectId, double average) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_SUBJECT_AVERAGE, average);
+
+        long result = db.update(TABLE_SUBJECTS, cv, COLUMN_SUBJECT_ID + "=?", new String[]{String.valueOf(subjectId)});
+        if (result == -1) {
+            Toast.makeText(context, "Fehler, der Durchschnitt konnte nicht aktualisiert werden.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Erfolgreich aktualisiert!", Toast.LENGTH_SHORT).show();
+        }
+    }
     //----------------------------------------Grade-------------------------------------------
 
     public long addGrade(long subjectId, String title, double weighting, double value) {
@@ -251,17 +279,49 @@ public class DbHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Erfolgreich aktualisiert.", Toast.LENGTH_SHORT).show();
         }
     }
-    public void updateSubjectAverage(int subjectId, double average) {
+
+    //----------------------------------------Exam-------------------------------------------
+    public long addExam(String examDate, String examSubject, String examDescription) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_SUBJECT_AVERAGE, average);
+        cv.put(COLUMN_EXAM_DATE, examDate);
+        cv.put(COLUMN_EXAM_SUBJECT, examSubject);
+        cv.put(COLUMN_EXAM_DESCRIPTION, examDescription);
 
-        long result = db.update(TABLE_SUBJECTS, cv, COLUMN_SUBJECT_ID + "=?", new String[]{String.valueOf(subjectId)});
+        return db.insert(TABLE_EXAMS, null, cv);
+    }
+
+    public Cursor readAllExam() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_EXAMS;
+        return db.rawQuery(query, null);
+    }
+
+    public void deleteExam(int examId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_EXAMS, COLUMN_EXAM_ID + "=?", new String[]{String.valueOf(examId)});
         if (result == -1) {
-            Toast.makeText(context, "Fehler, der Durchschnitt konnte nicht aktualisiert werden.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Fehler, die Prüfung konnte nicht gelöscht werden.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Erfolgreich aktualisiert!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Erfolgreich gelöscht.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void updateExam(int examId, String examDate, String examSubject, String examDescription) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_EXAM_DATE, examDate);
+        cv.put(COLUMN_EXAM_SUBJECT, examSubject);
+        cv.put(COLUMN_EXAM_DESCRIPTION, examDescription);
+
+        long result = db.update(TABLE_EXAMS, cv, COLUMN_EXAM_ID + "=?", new String[]{String.valueOf(examId)});
+
+        if (result == -1) {
+            Toast.makeText(context, "Fehler, die Prüfung konnte nicht aktualisiert werden.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Erfolgreich aktualisiert.", Toast.LENGTH_SHORT).show();
         }
     }
 }

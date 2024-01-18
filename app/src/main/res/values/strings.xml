@@ -17,6 +17,9 @@
     <string name="textview">TextView</string>
     <string name="subject">Subject</string>
     <string name="grades">grades</string>
-    <string name="exam_description">Prüfungsbeschrieb</string>
+    <string name="exam_title">Kommende Prüfungen</string>
     <string name="add_new_exam">Add new exam</string>
+    <string name="subject_name">Fachnamen</string>
+    <string name="beschrieb">Beschrieb</string>
+    <string name="date">Datum</string>
 </resources>
