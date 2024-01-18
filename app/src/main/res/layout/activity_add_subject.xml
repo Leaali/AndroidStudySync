@@ -18,23 +18,30 @@
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
 
             <EditText
                 android:id="@+id/input_title_subject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:autofillHints="Fachname"
                 android:ems="10"
-                android:hint="Fachname"
-                android:inputType="text" />
+                android:hint="@string/fachname"
+                android:inputType="text"
+                android:textSize="25sp" />
 
             <Button
                 android:id="@+id/button_add_subject"
-                android:layout_width="wrap_content"
+                android:layout_width="51dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
-                android:text="Hinzufügen" />
+                android:backgroundTint="#347036"
+                app:icon="@drawable/icon_save"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

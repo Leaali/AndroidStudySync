@@ -27,32 +27,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="Semestername"
-                android:inputType="text" />
+                android:hint="@string/semestername"
+                android:inputType="text"
+                android:textSize="25sp"
+                android:autofillHints="Semestername"/>
 
 
             <Button
                 android:id="@+id/button_delete_edit"
                 android:layout_width="51dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/design_default_color_error"
-                android:layout_marginStart="5dp"
                 app:icon="@drawable/icon_delete"
                 app:iconGravity="textStart"
-                app:iconPadding="0dp"/>
+                app:iconPadding="0dp" />
+
             <Button
                 android:id="@+id/button_update_edit"
                 android:layout_width="51dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="#347036"
-                android:layout_marginStart="5dp"
                 app:icon="@drawable/icon_save"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp" />
 
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/view_recycler_subject"
             android:layout_width="match_parent"
@@ -63,6 +67,7 @@
 
 
     </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add_subject"
         android:layout_width="wrap_content"
@@ -73,6 +78,7 @@
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/icon_add" />
+        app:srcCompat="@drawable/icon_add"
+        android:contentDescription="@string/add_new_subject" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,4 +3,18 @@
     <!-- Drawer from: https://www.geeksforgeeks.org/navigation-drawer-in-android/ - to toggle the open close button of the navigation drawer -->
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="fachname">Fachname</string>
+    <string name="semestername">Semestername</string>
+    <string name="hinzuf_gen">Hinzufügen</string>
+    <string name="add_new_subject">add new Subject</string>
+    <string name="average">Durchschnitt:</string>
+    <string name="add_new_grade">add new Grade</string>
+    <string name="fachnamen">Fachnamen</string>
+    <string name="description">Beschrieb</string>
+    <string name="weight">Gewichtung</string>
+    <string name="grade">Note</string>
+    <string name="_1">1</string>
+    <string name="textview">TextView</string>
+    <string name="subject">Subject</string>
+    <string name="grades">grades</string>
 </resources>
