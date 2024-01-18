@@ -1,10 +1,13 @@
-package ch.lw.myapp;
+package ch.lw.myapp.activity;
 
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import ch.lw.myapp.R;
+import ch.lw.myapp.db.DbHelper;
 
 public class AddSubjectActivity extends AppCompatActivity {
     EditText input_title_subject;

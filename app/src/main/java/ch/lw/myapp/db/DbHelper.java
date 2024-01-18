@@ -1,4 +1,4 @@
-package ch.lw.myapp;
+package ch.lw.myapp.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -74,7 +74,7 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addSemester(String title) {
+    public void addSemester(String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -87,7 +87,7 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    Cursor readAllData() {
+    public Cursor readAllData() {
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -98,7 +98,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    void updateData(String row_id, String title) {
+    public void updateData(String row_id, String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TITLE, title);
@@ -111,7 +111,7 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    void deleteOneRow(String row_id) {
+    public void deleteOneRow(String row_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         List<Integer> subjectIds = getAllSubjectsInSemester(row_id);
         for (int subjectId : subjectIds) {
@@ -153,7 +153,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     //----------------------------------------Subject-------------------------------------------
-    void addSubject(long semesterId, String title) {
+    public void addSubject(long semesterId, String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -170,7 +170,7 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    Cursor readAllSubjectData(int semesterId) {
+    public Cursor readAllSubjectData(int semesterId) {
         String query = "SELECT * FROM " + TABLE_SUBJECTS +
                 " WHERE " + COLUMN_SEMESTER_ID + " = " + semesterId;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -178,7 +178,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
-    void updateSubject(int subjectId, String title) {
+    public void updateSubject(int subjectId, String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -192,7 +192,7 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    void deleteSubject(int subjectId) {
+    public void deleteSubject(int subjectId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_GRADES, COLUMN_SUBJECT_ID + "=?", new String[]{String.valueOf(subjectId)});

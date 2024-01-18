@@ -13,27 +13,27 @@
         android:theme="@style/Theme.StudySync"
         tools:targetApi="31">
         <activity
-            android:name=".AddSubjectActivity"
+            android:name=".activity.AddSubjectActivity"
             android:exported="false"
             android:label="Neues Fach hinzufügen"
-            android:parentActivityName=".UpdateSemesterActivity" />
+            android:parentActivityName=".activity.UpdateSemesterActivity" />
         <activity
-            android:name=".UpdateSubjectActivity"
+            android:name=".activity.UpdateSubjectActivity"
             android:exported="false"
             android:label="Noten"
-            android:parentActivityName=".UpdateSubjectActivity" />
+            android:parentActivityName=".activity.UpdateSubjectActivity" />
         <activity
-            android:name=".UpdateSemesterActivity"
+            android:name=".activity.UpdateSemesterActivity"
             android:exported="false"
             android:label="Fächer übersicht"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".AddSemesterActivity"
+            android:name=".activity.AddSemesterActivity"
             android:exported="false"
             android:label="Neues Semester hinzufügen"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:label="Semester übersicht">
             <intent-filter>

@@ -1,4 +1,4 @@
-package ch.lw.myapp;
+package ch.lw.myapp.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,6 +20,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+
+import ch.lw.myapp.adapter.CustomSemesterAdapter;
+import ch.lw.myapp.R;
+import ch.lw.myapp.db.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView view_recycler;

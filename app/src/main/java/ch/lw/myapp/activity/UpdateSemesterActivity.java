@@ -1,4 +1,4 @@
-package ch.lw.myapp;
+package ch.lw.myapp.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+
+import ch.lw.myapp.adapter.CustomSubjectAdapter;
+import ch.lw.myapp.R;
+import ch.lw.myapp.db.DbHelper;
 
 public class UpdateSemesterActivity extends AppCompatActivity {
     EditText input_title_edit;

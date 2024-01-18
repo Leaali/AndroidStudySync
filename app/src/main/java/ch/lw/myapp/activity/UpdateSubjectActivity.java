@@ -1,4 +1,4 @@
-package ch.lw.myapp;
+package ch.lw.myapp.activity;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
@@ -17,6 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+
+import ch.lw.myapp.adapter.CustomGradeAdapter;
+import ch.lw.myapp.R;
+import ch.lw.myapp.db.DbHelper;
 
 public class UpdateSubjectActivity extends AppCompatActivity {
     EditText input_title_subject_edit;
@@ -143,7 +147,7 @@ public class UpdateSubjectActivity extends AppCompatActivity {
         cursor.close(); // Ressourcen freizugeben
     }
 
-    void calculateAndDisplayAverage() {
+    public void calculateAndDisplayAverage() {
         double totalWeightedValue = 0.0;
         double totalWeight = 0.0;
 

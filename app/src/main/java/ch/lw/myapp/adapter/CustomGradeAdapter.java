@@ -1,4 +1,4 @@
-package ch.lw.myapp;
+package ch.lw.myapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,13 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ch.lw.myapp.R;
+import ch.lw.myapp.activity.UpdateSubjectActivity;
+import ch.lw.myapp.db.DbHelper;
+
 public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.MyViewHolder> {
     private final DbHelper dbHelper;
     private final Context context;
     private final ArrayList<String> grade_id, subject_id, grade_title;
     private final ArrayList<Double> grade_weight, grade_value;
 
-    CustomGradeAdapter(Context context, DbHelper dbHelper, ArrayList<String> grade_id, ArrayList<String> subject_id, ArrayList<String> grade_title, ArrayList<Double> grade_weight, ArrayList<Double> grade_value) {
+    public CustomGradeAdapter(Context context, DbHelper dbHelper, ArrayList<String> grade_id, ArrayList<String> subject_id, ArrayList<String> grade_title, ArrayList<Double> grade_weight, ArrayList<Double> grade_value) {
         this.context = context;
         this.dbHelper = dbHelper;
         this.grade_id = grade_id;

@@ -1,4 +1,4 @@
-package ch.lw.myapp;
+package ch.lw.myapp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,12 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ch.lw.myapp.R;
+import ch.lw.myapp.activity.UpdateSubjectActivity;
+
 public class CustomSubjectAdapter extends RecyclerView.Adapter<CustomSubjectAdapter.MyViewHolder> {
     private final Context context;
     private final ArrayList<String> subject_id, semester_id, subject_title, subject_grades, subject_average;
     Activity activity;
 
-    CustomSubjectAdapter(Activity activity, Context context, ArrayList<String> subject_id, ArrayList<String> semester_id, ArrayList<String> subject_title, ArrayList<String> subject_grades, ArrayList<String> subject_average) {
+    public CustomSubjectAdapter(Activity activity, Context context, ArrayList<String> subject_id, ArrayList<String> semester_id, ArrayList<String> subject_title, ArrayList<String> subject_grades, ArrayList<String> subject_average) {
         this.activity = activity;
         this.context = context;
         this.subject_id = subject_id;

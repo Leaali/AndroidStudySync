@@ -1,4 +1,4 @@
-package ch.lw.myapp;
+package ch.lw.myapp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,12 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ch.lw.myapp.R;
+import ch.lw.myapp.activity.UpdateSemesterActivity;
+
 public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAdapter.MyViewHolder> {
     private final Context context;
     private final ArrayList<String> semester_id, semester_title;
     Activity activity;
 
-    CustomSemesterAdapter(Activity activity, Context context, ArrayList<String> semester_id, ArrayList<String> semester_title) {
+    public CustomSemesterAdapter(Activity activity, Context context, ArrayList<String> semester_id, ArrayList<String> semester_title) {
         this.activity = activity;
         this.context = context;
         this.semester_id = semester_id;
