@@ -26,11 +26,13 @@ public class UpdateSubjectActivity extends AppCompatActivity {
     EditText input_title_subject_edit;
     Button button_update_subject_edit, button_delete_subject_edit;
     FloatingActionButton button_add_grade;
-    String id, title;
+    String title;
+    int id;
 
     // ---Grade---
     CustomGradeAdapter customGradeAdapter;
-    ArrayList<String> grade_id, subject_id, grade_title;
+    ArrayList<String> grade_title;
+    ArrayList<Integer> grade_id, subject_id;
     ArrayList<Double> grade_weight, grade_value;
     RecyclerView view_recycler_grade;
     TextView text_grade_average;
@@ -50,7 +52,7 @@ public class UpdateSubjectActivity extends AppCompatActivity {
 
         getAndSetIntentData();
         setupGradeWithDb();
-        loadGrades(Integer.parseInt(id));
+        loadGrades(id);
         button_update_subject_edit.setOnClickListener(view -> updateData());
         button_delete_subject_edit.setOnClickListener(view -> confirmDialog());
         button_add_grade.setOnClickListener(view -> addGrade());
@@ -58,7 +60,7 @@ public class UpdateSubjectActivity extends AppCompatActivity {
 
     void getAndSetIntentData() {
         if (getIntent().hasExtra("id") && getIntent().hasExtra("title")) {
-            id = getIntent().getStringExtra("id");
+            id = getIntent().getIntExtra("id",1);
             title = getIntent().getStringExtra("title");
             input_title_subject_edit.setText(title);
             Log.d("stev", title);
@@ -70,7 +72,7 @@ public class UpdateSubjectActivity extends AppCompatActivity {
     void updateData() {
         String newTitle = input_title_subject_edit.getText().toString().trim();
         if (!newTitle.isEmpty()) {
-            new DbHelper(UpdateSubjectActivity.this).updateSubject(Integer.parseInt(id), newTitle);
+            new DbHelper(UpdateSubjectActivity.this).updateSubject(id, newTitle);
         } else {
             Toast.makeText(this, "Titel darf nicht leer sein.", Toast.LENGTH_SHORT).show();
         }
@@ -81,7 +83,7 @@ public class UpdateSubjectActivity extends AppCompatActivity {
                 .setTitle("Fach " + title + " löschen?")
                 .setMessage("Bist du dir sicher, dass du das Fach " + title + " löschen möchtest?")
                 .setPositiveButton("Ja", (dialogInterface, i) -> {
-                    new DbHelper(UpdateSubjectActivity.this).deleteSubject(Integer.parseInt(id));
+                    new DbHelper(UpdateSubjectActivity.this).deleteSubject(id);
                     finish();
                 })
                 .setNegativeButton("Nein", null)
@@ -107,11 +109,11 @@ public class UpdateSubjectActivity extends AppCompatActivity {
         double gradeWeight = 1.0;
         double gradeValue = 0.0;
 
-        long result = helperDB.addGrade(Long.parseLong(id), gradeTitle, gradeWeight, gradeValue);
+        long result = helperDB.addGrade(id, gradeTitle, gradeWeight, gradeValue);
 
         if (result != -1) {
             Toast.makeText(this, "Note erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
-            loadGrades(Integer.parseInt(id)); // Reload Recycle view
+            loadGrades(id); // Reload Recycle view
         } else {
             Toast.makeText(this, "Fehler beim Hinzufügen der Note.", Toast.LENGTH_SHORT).show();
         }
@@ -135,8 +137,8 @@ public class UpdateSubjectActivity extends AppCompatActivity {
 
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-                grade_id.add(cursor.getString(columnIndexId));
-                subject_id.add(cursor.getString(columnIndexSubjectId));
+                grade_id.add(cursor.getInt(columnIndexId));
+                subject_id.add(cursor.getInt(columnIndexSubjectId));
                 grade_title.add(cursor.getString(columnIndexTitle));
                 grade_weight.add(cursor.getDouble(columnIndexWeight));
                 grade_value.add(cursor.getDouble(columnIndexValue));
@@ -159,7 +161,7 @@ public class UpdateSubjectActivity extends AppCompatActivity {
         }
 
         double currentAverage  = totalWeight > 0 ? totalWeightedValue / totalWeight : 0.0;
-        helperDB.updateSubjectAverage(Integer.parseInt(subject_id.get(0)), currentAverage);
+        helperDB.updateSubjectAverage(subject_id.get(0), currentAverage);
         text_grade_average.setText(String.valueOf(currentAverage));
 
     }

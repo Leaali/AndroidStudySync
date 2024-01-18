@@ -19,10 +19,11 @@ import ch.lw.myapp.activity.UpdateSubjectActivity;
 
 public class CustomSubjectAdapter extends RecyclerView.Adapter<CustomSubjectAdapter.MyViewHolder> {
     private final Context context;
-    private final ArrayList<String> subject_id, semester_id, subject_title, subject_grades, subject_average;
+    private final ArrayList<String> subject_title, subject_grades, subject_average;
+    private final ArrayList<Integer> subject_id, semester_id;
     Activity activity;
 
-    public CustomSubjectAdapter(Activity activity, Context context, ArrayList<String> subject_id, ArrayList<String> semester_id, ArrayList<String> subject_title, ArrayList<String> subject_grades, ArrayList<String> subject_average) {
+    public CustomSubjectAdapter(Activity activity, Context context, ArrayList<Integer> subject_id, ArrayList<Integer> semester_id, ArrayList<String> subject_title, ArrayList<String> subject_grades, ArrayList<String> subject_average) {
         this.activity = activity;
         this.context = context;
         this.subject_id = subject_id;

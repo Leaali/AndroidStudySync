@@ -25,13 +25,15 @@ import ch.lw.myapp.db.DbHelper;
 public class UpdateSemesterActivity extends AppCompatActivity {
     EditText input_title_edit;
     Button button_update_edit, button_delete_edit;
-    String id, title;
+    String title;
+    Integer id;
 
     //Subject
     RecyclerView view_recycler_subject;
     FloatingActionButton button_add_subject;
     DbHelper HelperDB;
-    ArrayList<String> subject_id, semester_id, subject_title, subject_grades, subject_average;
+    ArrayList<String> subject_title, subject_grades, subject_average;
+    ArrayList<Integer> subject_id, semester_id;
     CustomSubjectAdapter customSubjectAdapter;
 
     @Override
@@ -55,7 +57,7 @@ public class UpdateSemesterActivity extends AppCompatActivity {
 
     void getAndSetIntentData() {
         if (getIntent().hasExtra("id") && getIntent().hasExtra("title")) {
-            id = getIntent().getStringExtra("id");
+            id = getIntent().getIntExtra("id",1);
             title = getIntent().getStringExtra("title");
             input_title_edit.setText(title);
             Log.d("stev", title);
@@ -87,8 +89,9 @@ public class UpdateSemesterActivity extends AppCompatActivity {
     // ----------------------------------------Subject-------------------------------------------
     void addSubject(){
         Intent intent = new Intent(UpdateSemesterActivity.this, AddSubjectActivity.class);
-        intent.putExtra("semester_id", id);
-        startActivityForResult(intent, 1); //TODO: falls Zeit, versuchen mittels anderen Methode die Einträge nach erstellung zu aktualisieren (recreate)
+        intent.putExtra("semester_id",id);
+        //TODO check if reload data
+        startActivity(intent);
     }
     void setupSubjectWithDb(){
         HelperDB = new DbHelper(UpdateSemesterActivity.this);
@@ -104,13 +107,13 @@ public class UpdateSemesterActivity extends AppCompatActivity {
         view_recycler_subject.setLayoutManager(new LinearLayoutManager(UpdateSemesterActivity.this));
     }
     void storeDataInArrays() {
-        Cursor cursor = HelperDB.readAllSubjectData(Integer.parseInt(id));
+        Cursor cursor = HelperDB.readAllSubjectData(id);
         if(cursor.getCount() == 0){
             Toast.makeText(this, "Keine Daten", Toast.LENGTH_SHORT).show();
         }else{
             while (cursor.moveToNext()){
-                subject_id.add(cursor.getString(0));
-                semester_id.add(cursor.getString(1));
+                subject_id.add(cursor.getInt(0));
+                semester_id.add(cursor.getInt(1));
                 subject_title.add(cursor.getString(2));
                 subject_grades.add(cursor.getString(3));
                 subject_average.add(cursor.getString(4));
@@ -121,8 +124,6 @@ public class UpdateSemesterActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
             recreate();
-        }
     }
 }

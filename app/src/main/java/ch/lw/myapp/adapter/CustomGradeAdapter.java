@@ -20,10 +20,11 @@ import ch.lw.myapp.db.DbHelper;
 public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.MyViewHolder> {
     private final DbHelper dbHelper;
     private final Context context;
-    private final ArrayList<String> grade_id, subject_id, grade_title;
+    private final ArrayList<String> grade_title;
+    private final ArrayList<Integer> grade_id, subject_id;
     private final ArrayList<Double> grade_weight, grade_value;
 
-    public CustomGradeAdapter(Context context, DbHelper dbHelper, ArrayList<String> grade_id, ArrayList<String> subject_id, ArrayList<String> grade_title, ArrayList<Double> grade_weight, ArrayList<Double> grade_value) {
+    public CustomGradeAdapter(Context context, DbHelper dbHelper, ArrayList<Integer> grade_id, ArrayList<Integer> subject_id, ArrayList<String> grade_title, ArrayList<Double> grade_weight, ArrayList<Double> grade_value) {
         this.context = context;
         this.dbHelper = dbHelper;
         this.grade_id = grade_id;
@@ -89,7 +90,7 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
     }
 
     private void saveChanges(int position, String newTitle, Double newWeight, Double newGrade) {
-        int gradeId = Integer.parseInt(grade_id.get(position));
+        int gradeId = grade_id.get(position);
         dbHelper.updateGrade(gradeId, newTitle, newWeight, newGrade);
         // Aktualisierung von den werten, um den Average zu berechnen
         grade_title.set(position, newTitle);
@@ -100,7 +101,7 @@ public class CustomGradeAdapter extends RecyclerView.Adapter<CustomGradeAdapter.
     }
 
     private void deleteGrade(int position) {
-        int gradeId = Integer.parseInt(grade_id.get(position));
+        int gradeId = grade_id.get(position);
 
         dbHelper.deleteGrade(gradeId);
 

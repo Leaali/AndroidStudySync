@@ -98,12 +98,12 @@ public class DbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void updateData(String row_id, String title) {
+    public void updateData(int row_id, String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TITLE, title);
 
-        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id}); // update command für SLQLite
+        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{String.valueOf(row_id)}); // update command für SLQLite
         if (result == -1) {
             Toast.makeText(context, "Fehler, das Semester konnte nicht angepasst werden.", Toast.LENGTH_SHORT).show();
         } else {
@@ -111,20 +111,20 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void deleteOneRow(String row_id) {
+    public void deleteOneRow(int row_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         List<Integer> subjectIds = getAllSubjectsInSemester(row_id);
         for (int subjectId : subjectIds) {
             deleteSubject(subjectId);
         }
-        long result = db.delete(TABLE_NAME, "_id=?", new String[]{row_id});
+        long result = db.delete(TABLE_NAME, "_id=?", new String[]{String.valueOf(row_id)});
         if (result == -1) {
             Toast.makeText(context, "Fehler, das Semester konnte nicht gelöscht werden.", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Erfolgreich gelöscht.", Toast.LENGTH_SHORT).show();
         }
     }
-    List<Integer> getAllSubjectsInSemester(String semesterId) {
+    List<Integer> getAllSubjectsInSemester(int semesterId) {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Integer> subjectIds = new ArrayList<>();
 
@@ -132,7 +132,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 TABLE_SUBJECTS,
                 new String[]{COLUMN_SUBJECT_ID},
                 COLUMN_SEMESTER_ID + "=?",
-                new String[]{semesterId},
+                new String[]{String.valueOf(semesterId)},
                 null,
                 null,
                 null
@@ -153,7 +153,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     //----------------------------------------Subject-------------------------------------------
-    public void addSubject(long semesterId, String title) {
+    public void addSubject(int semesterId, String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
