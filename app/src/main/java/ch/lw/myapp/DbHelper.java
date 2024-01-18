@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DbHelper extends SQLiteOpenHelper {
     private final Context context;
     private static final String DATABASE_NAME = "Grade.db";
@@ -110,12 +113,42 @@ public class DbHelper extends SQLiteOpenHelper {
 
     void deleteOneRow(String row_id) {
         SQLiteDatabase db = this.getWritableDatabase();
+        List<Integer> subjectIds = getAllSubjectsInSemester(row_id);
+        for (int subjectId : subjectIds) {
+            deleteSubject(subjectId);
+        }
         long result = db.delete(TABLE_NAME, "_id=?", new String[]{row_id});
         if (result == -1) {
             Toast.makeText(context, "Fehler, das Semester konnte nicht gelöscht werden.", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Erfolgreich gelöscht.", Toast.LENGTH_SHORT).show();
         }
+    }
+    List<Integer> getAllSubjectsInSemester(String semesterId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Integer> subjectIds = new ArrayList<>();
+
+        Cursor cursor = db.query(
+                TABLE_SUBJECTS,
+                new String[]{COLUMN_SUBJECT_ID},
+                COLUMN_SEMESTER_ID + "=?",
+                new String[]{semesterId},
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            int columnIndex = cursor.getColumnIndex(COLUMN_SUBJECT_ID);
+
+            if (columnIndex != -1 && cursor.moveToFirst()) {
+                do {
+                    subjectIds.add(cursor.getInt(columnIndex));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return subjectIds;
     }
 
 
@@ -161,6 +194,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     void deleteSubject(int subjectId) {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_GRADES, COLUMN_SUBJECT_ID + "=?", new String[]{String.valueOf(subjectId)});
         long result = db.delete(TABLE_SUBJECTS, COLUMN_SUBJECT_ID + "=?", new String[]{String.valueOf(subjectId)});
         if (result == -1) {
             Toast.makeText(context, "Fehler, das Fach konnte nicht gelöscht werden.", Toast.LENGTH_SHORT).show();
