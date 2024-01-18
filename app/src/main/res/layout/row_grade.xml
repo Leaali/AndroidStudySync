@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/mainLayoutGrade">
+    android:id="@+id/mainLayoutGrade"
+    android:background="@drawable/background_border_row"
+    android:padding="8dp" >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -31,9 +33,11 @@
                 android:id="@+id/input_weight_grade_edit"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
+                android:layout_marginEnd="5dp"
                 android:ems="3"
                 android:hint="Gewichtung"
                 android:inputType="numberDecimal"
+                app:layout_constraintEnd_toStartOf="@+id/input_grade_grade_edit"
                 app:layout_constraintStart_toEndOf="@+id/input_title_grade_edit"
                 app:layout_constraintTop_toTopOf="@+id/input_title_grade_edit" />
 
@@ -44,6 +48,7 @@
                 android:ems="3"
                 android:hint="Note"
                 android:inputType="numberDecimal"
+                app:layout_constraintEnd_toStartOf="@+id/button_delete_grade"
                 app:layout_constraintStart_toEndOf="@+id/input_weight_grade_edit"
                 app:layout_constraintTop_toTopOf="@+id/input_weight_grade_edit" />
 
@@ -51,26 +56,24 @@
                 android:id="@+id/button_delete_grade"
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
                 android:backgroundTint="@color/design_default_color_error"
                 app:icon="@drawable/icon_delete"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/input_grade_grade_edit"
+                app:layout_constraintEnd_toStartOf="@+id/button_save_grade"
                 app:layout_constraintTop_toTopOf="@+id/input_grade_grade_edit" />
 
             <Button
                 android:id="@+id/button_save_grade"
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/material_dynamic_neutral30"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#347036"
                 app:icon="@drawable/icon_save"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/button_delete_grade"
                 app:layout_constraintTop_toTopOf="@+id/button_delete_grade" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

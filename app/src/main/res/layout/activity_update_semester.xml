@@ -30,12 +30,6 @@
                 android:hint="Semestername"
                 android:inputType="text" />
 
-            <Button
-                android:id="@+id/button_update_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Anpassen" />
 
             <Button
                 android:id="@+id/button_delete_edit"
@@ -43,9 +37,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/design_default_color_error"
+                android:layout_marginStart="5dp"
                 app:icon="@drawable/icon_delete"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"/>
+            <Button
+                android:id="@+id/button_update_edit"
+                android:layout_width="51dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#347036"
+                android:layout_marginStart="5dp"
+                app:icon="@drawable/icon_save"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
 
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
