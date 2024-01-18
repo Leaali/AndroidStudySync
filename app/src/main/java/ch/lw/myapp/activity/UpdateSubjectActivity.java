@@ -146,7 +146,7 @@ public class UpdateSubjectActivity extends AppCompatActivity {
             customGradeAdapter.notifyDataSetChanged(); // Aktualisiere den RecyclerView-Adapter
             calculateAndDisplayAverage();
         }
-        cursor.close(); // Ressourcen freizugeben
+        cursor.close();
     }
 
     public void calculateAndDisplayAverage() {

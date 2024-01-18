@@ -91,7 +91,7 @@ public class UpdateSemesterActivity extends AppCompatActivity {
         Intent intent = new Intent(UpdateSemesterActivity.this, AddSubjectActivity.class);
         intent.putExtra("semester_id",id);
         //TODO check if reload data
-        startActivity(intent);
+        startActivityForResult(intent, 1); //TODO: falls Zeit, versuchen mittels anderen Methode die Einträge nach erstellung zu aktualisieren (recreate)
     }
     void setupSubjectWithDb(){
         HelperDB = new DbHelper(UpdateSemesterActivity.this);
@@ -124,6 +124,8 @@ public class UpdateSemesterActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
             recreate();
+        }
     }
 }
