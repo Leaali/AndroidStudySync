@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(MainActivity.this, MainActivity.class);
         } else if (itemId == R.id.upcoming_tests) {
             //TODO: change second MainActivity to UpcomingTestActivity
-            intent = new Intent(MainActivity.this, MainActivity.class);
+            intent = new Intent(MainActivity.this, ExamActivity.class);
         }
         if (intent != null) {
             startActivity(intent);
