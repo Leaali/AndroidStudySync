@@ -37,6 +37,7 @@ public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAd
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         //get String from the Array
+        holder.semester_id_text.setText(String.valueOf(semester_id.get(position)));
         holder.semester_title_text.setText(String.valueOf(semester_title.get(position)));
 
         holder.mainLayout.setOnClickListener(view -> {
@@ -56,11 +57,12 @@ public class CustomSemesterAdapter extends RecyclerView.Adapter<CustomSemesterAd
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView semester_title_text;
+        TextView semester_id_text, semester_title_text;
         ConstraintLayout mainLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            semester_id_text= itemView.findViewById(R.id.semester_id_text);
             semester_title_text = itemView.findViewById(R.id.semester_title_text);
             mainLayout = itemView.findViewById(R.id.mainLayout);
         }
