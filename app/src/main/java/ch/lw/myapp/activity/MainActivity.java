@@ -1,14 +1,10 @@
 package ch.lw.myapp.activity;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-import ch.lw.myapp.ExamNotificationService;
+import ch.lw.myapp.service.ExamNotificationService2;
 import ch.lw.myapp.adapter.CustomSemesterAdapter;
 import ch.lw.myapp.R;
 import ch.lw.myapp.db.DbHelper;
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         view_recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         setupNavigationView();
 
-        Intent serviceIntent = new Intent(this, ExamNotificationService.class);
+        Intent serviceIntent = new Intent(this, ExamNotificationService2.class);
         startService(serviceIntent);
     }
 
