@@ -61,7 +61,27 @@ public class MainActivity extends AppCompatActivity {
         });
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+        setUp();
 
+        storeDataInArrays();
+        customSemesterAdapter = new CustomSemesterAdapter(MainActivity.this, this, semester_id, semester_title);
+        view_recycler.setAdapter(customSemesterAdapter);
+        view_recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        setupNavigationView();
+        setupNotificationTests();
+
+    }
+
+    void setupNotificationTests() {
+//         Um die NotificationServices zu testen
+//         ExamNotificationService macht keine benachrichtigung, wenn die App geschlossen ist
+//         ExamNotificationService2 macht auch Benachrichtigungen, wenn die app geschlossen ist
+
+//        Intent serviceIntent = new Intent(this, ExamNotificationService2.class);
+//        startService(serviceIntent);
+    }
+
+    void setUp() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -70,15 +90,6 @@ public class MainActivity extends AppCompatActivity {
         HelperDB = new DbHelper(MainActivity.this);
         semester_id = new ArrayList<>();
         semester_title = new ArrayList<>();
-
-        storeDataInArrays();
-        customSemesterAdapter = new CustomSemesterAdapter(MainActivity.this, this, semester_id, semester_title);
-        view_recycler.setAdapter(customSemesterAdapter);
-        view_recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        setupNavigationView();
-
-        Intent serviceIntent = new Intent(this, ExamNotificationService2.class);
-        startService(serviceIntent);
     }
 
     //refresh page (if. sth. changeg)
@@ -136,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
     //---------- Notivication Service
     private void sendNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "defaultChannel")

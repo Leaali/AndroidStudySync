@@ -65,7 +65,7 @@ public class ExamNotificationService2 extends JobService {
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-                handler.sendEmptyMessageDelayed(0, 10000); //alle 10sek
+                handler.sendEmptyMessageDelayed(0, 5 * 60 * 60 * 1000);
             }
         };
         scheduleJob();
@@ -92,8 +92,8 @@ public class ExamNotificationService2 extends JobService {
     private void scheduleJob() {
         ComponentName componentName = new ComponentName(this, ExamNotificationService2.class);
         JobInfo jobInfo = new JobInfo.Builder(1, componentName)
-                .setPeriodic(TimeUnit.MINUTES.toMillis(15)) // Beispiel: Führen Sie die Aufgabe alle 15 Minuten aus
-                .setPersisted(true) // Überlebt Geräteneustart
+                .setPeriodic(TimeUnit.MINUTES.toMillis(300))
+                .setPersisted(true) // bleibt auch beu neustart vorhanden
                 .build();
 
         JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
