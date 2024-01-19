@@ -58,15 +58,15 @@ public class ExamActivity extends AppCompatActivity {
         exam_description = new ArrayList<>();
         exam_subject = new ArrayList<>();
         Cursor cursor = HelperDB.readAllExam();
-        if (cursor != null && cursor.moveToFirst()) {
-            while (cursor.moveToNext()) {
+        if(cursor.getCount() == 0){
+            Toast.makeText(this, "Keine Daten", Toast.LENGTH_SHORT).show();
+        }else{
+            while (cursor.moveToNext()){
                 exam_id.add(cursor.getInt(0));
                 exam_date.add(cursor.getString(1));
                 exam_description.add(cursor.getString(2));
                 exam_subject.add(cursor.getString(3));
             }
-        } else {
-            Toast.makeText(this, "Keine Daten", Toast.LENGTH_SHORT).show();
         }
 
         customExamAdapter = new CustomExamAdapter(ExamActivity.this, this, exam_id, exam_date, exam_description, exam_subject);

@@ -35,12 +35,12 @@ public class UpdateExamActivity extends AppCompatActivity {
         getAndSetIntentData();
 
         buttonUpdate.setOnClickListener(view -> updateData());
-        buttonDelete.setOnClickListener(view -> confirmDialog());
+        buttonDelete.setOnClickListener(view -> confirmDialog(id));
     }
 
     void getAndSetIntentData() {
         if (getIntent().hasExtra("id")) {
-            id = getIntent().getIntExtra("id", 1);
+            id = getIntent().getIntExtra("id",0);
             examDate = getIntent().getStringExtra("date");
             subject = getIntent().getStringExtra("subject");
             description = getIntent().getStringExtra("description");
@@ -67,12 +67,12 @@ public class UpdateExamActivity extends AppCompatActivity {
         }
     }
 
-    void confirmDialog() {
+    void confirmDialog(int examId) {
         new AlertDialog.Builder(this)
                 .setTitle("Prüfung löschen?")
                 .setMessage("Bist du dir sicher, dass du diese Prüfung löschen möchtest?")
                 .setPositiveButton("Ja", (dialogInterface, i) -> {
-                    new DbHelper(UpdateExamActivity.this).deleteExam(id);
+                    new DbHelper(UpdateExamActivity.this).deleteExam(examId);
                     finish();
                 })
                 .setNegativeButton("Nein", null)

@@ -50,7 +50,7 @@ public class CustomExamAdapter extends RecyclerView.Adapter<CustomExamAdapter.My
             int adapterPosition = holder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 Intent intent = new Intent(context, UpdateExamActivity.class);
-                intent.putExtra("id", String.valueOf(exam_id.get(adapterPosition)));
+                intent.putExtra("id", exam_id.get(adapterPosition));
                 intent.putExtra("date", exam_date.get(adapterPosition));
                 intent.putExtra("description", exam_description.get(adapterPosition));
                 intent.putExtra("subject", exam_subject.get(adapterPosition));

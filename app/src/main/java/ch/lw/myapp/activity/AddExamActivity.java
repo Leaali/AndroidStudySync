@@ -37,7 +37,9 @@ public class AddExamActivity extends AppCompatActivity {
                 setResult(1);
                 finish();
             } catch (Exception e) {
+                setResult(1);
                 e.printStackTrace();
+                finish();
             }
         });
 
