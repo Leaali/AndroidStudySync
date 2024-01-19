@@ -20,7 +20,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
         <service
-            android:name=".ExamNotificationService"
+            android:name=".service.ExamNotificationService"
             android:enabled="true"
             android:exported="false"/>
         <activity

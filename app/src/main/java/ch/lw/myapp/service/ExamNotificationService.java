@@ -1,4 +1,4 @@
-package ch.lw.myapp;
+package ch.lw.myapp.service;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
