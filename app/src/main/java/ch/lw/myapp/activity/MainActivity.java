@@ -1,9 +1,14 @@
 package ch.lw.myapp.activity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,11 +27,14 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
+import ch.lw.myapp.ExamNotificationService;
 import ch.lw.myapp.adapter.CustomSemesterAdapter;
 import ch.lw.myapp.R;
 import ch.lw.myapp.db.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
+    private NotificationManager notificationManager;
+
     RecyclerView view_recycler;
     FloatingActionButton button_add;
 
@@ -70,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
         view_recycler.setAdapter(customSemesterAdapter);
         view_recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         setupNavigationView();
+
+        Intent serviceIntent = new Intent(this, ExamNotificationService.class);
+        startService(serviceIntent);
     }
 
     //refresh page (if. sth. changeg)
@@ -126,5 +138,14 @@ public class MainActivity extends AppCompatActivity {
         if (intent != null) {
             startActivity(intent);
         }
+    }
+    //---------- Notivication Service
+    private void sendNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "defaultChannel")
+                .setSmallIcon(android.R.drawable.ic_media_play)
+                .setContentTitle("Snow")
+                .setContentText("It's snowing!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        notificationManager.notify(0, builder.build());
     }
 }
