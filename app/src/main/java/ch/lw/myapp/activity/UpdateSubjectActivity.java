@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -108,6 +110,8 @@ public class UpdateSubjectActivity extends AppCompatActivity {
         String gradeTitle = "";
         double gradeWeight = 1.0;
         double gradeValue = 0.0;
+        @SuppressLint("ResourceType") Animation bounceAnimation = AnimationUtils.loadAnimation(UpdateSubjectActivity.this, R.drawable.bounce);
+        button_add_grade.startAnimation(bounceAnimation);
 
         long result = helperDB.addGrade(id, gradeTitle, gradeWeight, gradeValue);
 
