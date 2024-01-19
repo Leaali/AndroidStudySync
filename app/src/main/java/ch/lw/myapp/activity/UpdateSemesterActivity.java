@@ -57,7 +57,7 @@ public class UpdateSemesterActivity extends AppCompatActivity {
 
     void getAndSetIntentData() {
         if (getIntent().hasExtra("id") && getIntent().hasExtra("title")) {
-            id = getIntent().getIntExtra("id",1);
+            id = getIntent().getIntExtra("id",0);
             title = getIntent().getStringExtra("title");
             input_title_edit.setText(title);
             Log.d("stev", title);

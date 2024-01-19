@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton button_add;
 
     DbHelper HelperDB;
-    ArrayList<String> semester_id, semester_title;
+    ArrayList<String> semester_title;
+    ArrayList<Integer> semester_id;
     CustomSemesterAdapter customSemesterAdapter;
 
     //Navigation - Drawer from: https://www.geeksforgeeks.org/navigation-drawer-in-android/
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Keine Daten", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                semester_id.add(cursor.getString(0));
+                semester_id.add(cursor.getInt(0));
                 semester_title.add(cursor.getString(1));
             }
         }

@@ -53,7 +53,7 @@ public class CustomSubjectAdapter extends RecyclerView.Adapter<CustomSubjectAdap
             int adapterPosition = holder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 Intent intent = new Intent(context, UpdateSubjectActivity.class);
-                intent.putExtra("id", String.valueOf(subject_id.get(adapterPosition)));
+                intent.putExtra("id", subject_id.get(adapterPosition));
                 intent.putExtra("semester", String.valueOf(semester_id.get(adapterPosition)));
                 intent.putExtra("title", String.valueOf(subject_title.get(adapterPosition)));
                 intent.putExtra("grades", String.valueOf(subject_grades.get(adapterPosition)));
