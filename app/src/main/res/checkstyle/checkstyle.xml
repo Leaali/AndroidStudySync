@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
- 
+<!-- code from https://chat.openai.com/ promt Checkstyle-Konfiguration um zu prüfen  für die maximale Methodenlänge max 30zeilen ist -->
 <!DOCTYPE module PUBLIC
   "-//Checkstyle//DTD Checkstyle Configuration 1.2//EN"
   "https://checkstyle.org/dtds/configuration_1_2.dtd">
